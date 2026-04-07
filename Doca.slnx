@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="doca.client/doca.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="Doca.Server/Doca.Server.csproj" />
+</Solution>
