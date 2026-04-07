@@ -24,8 +24,9 @@ cd Doca
 ## Изменение конфигурации appsettings.json в папке Doca.Server
 ### Шаг 1: Создайте бьд и вставте туда этот скрипт sql
 
-
 ```sql
+
+
 -- phpMyAdmin SQL Dump
 -- version 5.2.3
 -- https://www.phpmyadmin.net/
@@ -262,12 +263,16 @@ COMMIT;
 
 ### Шаг 2: Измените строку подключения к серверу где лежит бд (MySql)
 
+
+```json
 "ConnectionStrings": {
         "DefaultConnection": "Server=Название_сервера;Database=DocaDb;User=логин;Password=пароль;Port=3306;"
     },
+```
 
 ### Шаг 3: Создайте и измените ключ для JWT 
 
+```json
  "Jwt": {
         "Key": "Ключ",
         "Issuer": "DocSystem",
@@ -275,6 +280,6 @@ COMMIT;
         "ExpireHours": 24
     },
 
-
+```
 
 
