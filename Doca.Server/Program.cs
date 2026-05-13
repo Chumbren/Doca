@@ -8,11 +8,42 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    + ";Old Guids=true;";
+string connectionString;
+string db = "default";
+
+if (args.Length > 0)
+{
+    db = args[0];
+    connectionString = builder.Configuration.GetConnectionString(args[0]) 
+        ?? throw new InvalidOperationException($"Строка подключения для базы данных '{db}' не определена в конфигураии."); ;
+}
+else
+{
+    throw new InvalidOperationException($"Отсутсвует параметр для определения базы данных.");
+}
+
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseMySQL(connectionString)); 
+{
+    switch (db)
+    {
+        case "mysql":
+            opt.UseMySQL(
+                connectionString + ";Old Guids=true;"
+            );
+            break;
+
+        case "postgres":
+            opt.UseNpgsql(connectionString);
+            break;
+        default:
+            opt.UseMySQL(
+                  connectionString + ";Old Guids=true;"
+            );
+            break;
+    }
+});
+
 
 
 var jwtKey = builder.Configuration["Jwt:Key"]!;
