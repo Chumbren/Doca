@@ -2,12 +2,21 @@
 
 ## Необходимые компоненты
 
-### 1. Backend (ASP.NET Core 8.0+)
-- .NET 10.0 SDK или выше
-- MySQL Server (LocalDB или полная версия)
-- Visual Studio 2022 / VS Code / Rider
+### 1. Поддерживаемые базы данных (доступна на выбор только одна)
+- PostgreSQL 18.3
+- MySQL 8.4
 
-### 2. Frontend (React + Vite)
+### 2. Backend (ASP.NET Core 8.0+)
+- .NET 10.0 SDK или выше
+- Visual Studio 2026 / VS Code / Rider
+
+#### 2.1 Аргументы командной строки сервера
+#### 2.2.1 Название базы данных
+- postgres (PostgreSQL)
+- mysql (MySql)
+- По умолчанию: postgres
+
+### 3. Frontend (React + Vite)
 - Node.js 18+ 
 - npm или yarn
 - Современный браузер (Chrome, Firefox, Edge)
@@ -21,7 +30,7 @@
 git clone <repository-url>
 cd Doca
 
-### Шаг 2 Изменение конфигурации appsettings.json в папке Doca.Server
+### Шаг 2 Создание бд
 #### Создайте бд и вставте туда этот скрипт sql
 
 ```sql
@@ -274,7 +283,7 @@ COMMIT;
 
 ```json
  "Jwt": {
-        "Key": "Ключ",
+        "Key": "MyKey",
         "Issuer": "DocSystem",
         "Audience": "DocSystemClient",
         "ExpireHours": 24
@@ -285,4 +294,26 @@ COMMIT;
 
 ### Шаг 4 Запуск приложения в Visual studio
 
-Зайдите в Visual Studio и запусте проект (ctrl+f5) подписав ssl сертификат
+#### 4.1 Подпись SSL сертификата
+
+Откройте CLI / CMD
+
+Пропишите такие команды(Windows / Linux)
+
+```cmd
+ 
+cd путь_до_корневой_папки_решения
+dotnet dev-certs https --clean
+dotnet dev-certs https --trust
+
+```
+
+Нажмите в каждом окне Да / Ок
+
+#### 4.2 Запуск проекта
+
+1. Зайдите в Visual Studio 
+
+2. В обозревателе решений найдите проект Doca.Server , нажмите ПКМ и выберите "Назначить начальным запускаемым проектом"
+
+3. Запустите проект (ctrl+f5)
